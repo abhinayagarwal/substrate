@@ -77,8 +77,6 @@ jobs:
           # unzip android-ndk-r21b-linux-x86_64.zip
           # ls
           cd $GITHUB_WORKSPACE
-        with:
-          target: ${{ matrix.target }}
 
       - name: Install Android SDK and NDK (MacOS)
         if: matrix.os == 'macos-latest' && matrix.target == 'android'
@@ -94,8 +92,6 @@ jobs:
           # unzip android-ndk-r21b-darwin-x86_64.zip
           # ls
           cd $GITHUB_WORKSPACE
-        with:
-          target: ${{ matrix.target }}
     
       - name: Checkout
         uses: actions/checkout@v2
