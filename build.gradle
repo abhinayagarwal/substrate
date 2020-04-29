@@ -23,6 +23,11 @@ test {
         events 'PASSED', 'FAILED', 'SKIPPED'
         stackTraceFilters = []
     }
+    if (project.hasProperty('android')) {
+        exclude '**/HostTest.class'
+    } else {
+        exclude '**/AndroidTest.class'
+    }
 }
 
 dependencies {
