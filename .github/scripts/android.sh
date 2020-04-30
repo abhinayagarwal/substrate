@@ -2,7 +2,7 @@
 
 mkdir -p $HOME/android-sdk
 cd $HOME/android-sdk
-if [[ "$1" == "Linux" ]]
+if [[ "$RUNNER_OS" == "Linux" ]]
 then
   wget https://dl.google.com/android/repository/commandlinetools-linux-6200805_latest.zip
   unzip -q commandlinetools-linux-6200805_latest.zip

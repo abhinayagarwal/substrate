@@ -75,7 +75,7 @@ jobs:
       - name: Install Android SDK and NDK
         if: matrix.target == 'android'
         run: |
-          bash $GITHUB_WORKSPACE/.github/scripts/android.sh runner.os
+          bash $GITHUB_WORKSPACE/.github/scripts/android.sh
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
