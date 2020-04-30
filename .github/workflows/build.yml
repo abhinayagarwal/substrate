@@ -43,19 +43,29 @@ jobs:
           wget https://download2.gluonhq.com/substrate/graalvm/graalvm-svm-darwin-20.2-latest.zip
           unzip graalvm-svm-darwin-20.2-latest && cd $GITHUB_WORKSPACE
 
-      - name: Install linux JavaFX static libs (Linux)
-        if: runner.os == 'Linux'
+      - name: Install JavaFX static libs
         run: |
-          mkdir -p $HOME/javafx-static-libs-linux && cd $HOME/javafx-static-libs-linux
-          wget https://download2.gluonhq.com/substrate/javafxstaticsdk/openjfx-15-latest-linux-x86_64-static.zip
-          unzip openjfx-15-latest-linux-x86_64-static.zip && cd $GITHUB_WORKSPACE
-
-      - name: Install darwin JavaFX static libs (MacOS)
-        if: runner.os == 'macOS'
-        run: |
-          mkdir -p $HOME/javafx-static-libs-darwin && cd $HOME/javafx-static-libs-darwin
-          wget https://download2.gluonhq.com/substrate/javafxstaticsdk/openjfx-15-latest-darwin-x86_64-static.zip
-          unzip openjfx-15-latest-darwin-x86_64-static.zip && cd $GITHUB_WORKSPACE
+          if [ "$RUNNER_OS" == "macOS" ]; then
+            mkdir -p $HOME/javafx-static-libs-darwin && cd $HOME/javafx-static-libs-darwin
+            if [ "$TARGET" == "host" ]; then
+              wget https://download2.gluonhq.com/substrate/javafxstaticsdk/openjfx-15-latest-darwin-x86_64-static.zip
+              unzip openjfx-15-latest-darwin-x86_64-static.zip && cd $GITHUB_WORKSPACE
+            else
+              wget https://download2.gluonhq.com/substrate/javafxstaticsdk/openjfx-15-latest-android-aarch64-static.zip
+              unzip openjfx-15-latest-android-aarch64-static.zip && cd $GITHUB_WORKSPACE
+            fi
+          else
+            mkdir -p $HOME/javafx-static-libs-linux && cd $HOME/javafx-static-libs-linux
+            if [ "$TARGET" == "host" ]; then
+              wget https://download2.gluonhq.com/substrate/javafxstaticsdk/openjfx-15-latest-linux-x86_64-static.zip
+              unzip openjfx-15-latest-linux-x86_64-static.zip && cd $GITHUB_WORKSPACE
+            else
+              wget https://download2.gluonhq.com/substrate/javafxstaticsdk/openjfx-15-android-aarch64-static.zip
+              unzip openjfx-15-android-aarch64-static.zip && cd $GITHUB_WORKSPACE
+            fi
+          fi
+        env:
+          TARGET = ${{ matrix.target }}
 
       - name: Install iOS JavaFX static libs (MacOS)
         if: runner.os == 'macOS'
