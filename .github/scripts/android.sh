@@ -2,10 +2,11 @@
 
 mkdir -p $HOME/android-sdk
 cd $HOME/android-sdk
-if [[ $1 == "Linux" ]] then
+if [[ $1 == "Linux" ]]
+then
   wget https://dl.google.com/android/repository/commandlinetools-linux-6200805_latest.zip
   unzip -q commandlinetools-linux-6200805_latest.zip
-else [[ $1 == "macOS" ]]
+else
   wget https://dl.google.com/android/repository/commandlinetools-mac-6200805_latest.zip
   unzip -q commandlinetools-mac-6200805_latest.zip
 fi
