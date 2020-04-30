@@ -64,25 +64,10 @@ jobs:
           wget https://download2.gluonhq.com/substrate/javafxstaticsdk/openjfx-15-latest-ios-arm64-static.zip
           unzip openjfx-15-latest-ios-arm64-static.zip && cd $GITHUB_WORKSPACE
 
-      - name: Install Android SDK and NDK (Linux)
-        if: matrix.os == 'ubuntu-latest' && matrix.target == 'android'
-        run: |
-          bash .github/scripts/android.sh runner.os
-          # mkdir -p $HOME/android-sdk && cd $HOME/android-sdk
-          # wget https://dl.google.com/android/repository/commandlinetools-linux-6200805_latest.zip
-          # unzip commandlinetools-linux-6200805_latest.zip
-          # tools/bin/sdkmanager "platforms;android-27" "build-tools;27.0.3" "platform-tools" "extras;android;m2repository" "extras;google;m2repository" "ndk-bundle"
-          # Android NDK
-          # mkdir -p $HOME/android-ndk && cd $HOME/android-ndk
-          # wget https://dl.google.com/android/repository/android-ndk-r21b-linux-x86_64.zip
-          # unzip android-ndk-r21b-linux-x86_64.zip
-          # ls
-
-      - name: Install Android SDK and NDK (MacOS)
-        if: matrix.os == 'macos-latest' && matrix.target == 'android'
+      - name: Install Android SDK and NDK 
         run: |
           # Android SDK
-          bash .github/scripts/android.sh runner.os
+          bash $GITHUB_WORKSPACE/.github/scripts/android.sh runner.os
           # Android NDK
           # mkdir -p $HOME/android-ndk && cd $HOME/android-ndk
           # wget https://dl.google.com/android/repository/android-ndk-r21b-darwin-x86_64.zip
