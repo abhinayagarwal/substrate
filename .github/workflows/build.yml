@@ -64,16 +64,6 @@ jobs:
           wget https://download2.gluonhq.com/substrate/javafxstaticsdk/openjfx-15-latest-ios-arm64-static.zip
           unzip openjfx-15-latest-ios-arm64-static.zip && cd $GITHUB_WORKSPACE
 
-      - name: Install Android SDK and NDK 
-        run: |
-          # Android SDK
-          bash $GITHUB_WORKSPACE/.github/scripts/android.sh runner.os
-          # Android NDK
-          # mkdir -p $HOME/android-ndk && cd $HOME/android-ndk
-          # wget https://dl.google.com/android/repository/android-ndk-r21b-darwin-x86_64.zip
-          # unzip android-ndk-r21b-darwin-x86_64.zip
-          # ls
-
       - name: Checkout
         uses: actions/checkout@v2
 
@@ -81,6 +71,11 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 11
+
+      - name: Install Android SDK and NDK
+        if: matrix.target == 'android'
+        run: |
+          bash $GITHUB_WORKSPACE/.github/scripts/android.sh runner.os
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew

@@ -25,3 +25,9 @@ echo "24333f8a63b6825ea9c5514f83c2829b004d1fee" > "$HOME/android-sdk/licenses/an
 echo "Install Android SDK"
 java -Dcom.android.sdklib.toolsdir=$HOME/android-sdk/tools -classpath "$HOME/android-sdk/tools/lib/*:$HOME/android-sdk/tools/lib/java11/*" com.android.sdklib.tool.sdkmanager.SdkManagerCli "platforms;android-27" "build-tools;27.0.3" "platform-tools" "extras;android;m2repository" "extras;google;m2repository" "ndk-bundle"
 cd $GITHUB_WORKSPACE
+
+# Android NDK
+# mkdir -p $HOME/android-ndk && cd $HOME/android-ndk
+# wget https://dl.google.com/android/repository/android-ndk-r21b-darwin-x86_64.zip
+# unzip android-ndk-r21b-darwin-x86_64.zip
+# ls
