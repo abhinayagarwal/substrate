@@ -4,11 +4,11 @@ mkdir -p $HOME/android-sdk
 cd $HOME/android-sdk
 if [[ "$RUNNER_OS" == "Linux" ]]
 then
-  wget https://dl.google.com/android/repository/commandlinetools-linux-6200805_latest.zip
-  unzip -q commandlinetools-linux-6200805_latest.zip
+  wget https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip
+  unzip -q sdk-tools-linux-4333796.zip
 else
-  wget https://dl.google.com/android/repository/commandlinetools-mac-6200805_latest.zip
-  unzip -q commandlinetools-mac-6200805_latest.zip
+  wget https://dl.google.com/android/repository/sdk-tools-darwin-4333796.zip
+  unzip -q sdk-tools-darwin-4333796.zip
 fi
 cd tools/lib/
 mkdir java11
