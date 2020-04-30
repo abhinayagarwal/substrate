@@ -43,37 +43,6 @@ jobs:
           wget https://download2.gluonhq.com/substrate/graalvm/graalvm-svm-darwin-20.2-latest.zip
           unzip graalvm-svm-darwin-20.2-latest && cd $GITHUB_WORKSPACE
 
-      - name: Install JavaFX static libs
-        run: |
-          if [ "$RUNNER_OS" == "macOS" ]; then
-            mkdir -p $HOME/javafx-static-libs-darwin && cd $HOME/javafx-static-libs-darwin
-            if [ "$TARGET" == "host" ]; then
-              wget https://download2.gluonhq.com/substrate/javafxstaticsdk/openjfx-15-latest-darwin-x86_64-static.zip
-              unzip openjfx-15-latest-darwin-x86_64-static.zip && cd $GITHUB_WORKSPACE
-            else
-              wget https://download2.gluonhq.com/substrate/javafxstaticsdk/openjfx-15-latest-android-aarch64-static.zip
-              unzip openjfx-15-latest-android-aarch64-static.zip && cd $GITHUB_WORKSPACE
-            fi
-          else
-            mkdir -p $HOME/javafx-static-libs-linux && cd $HOME/javafx-static-libs-linux
-            if [ "$TARGET" == "host" ]; then
-              wget https://download2.gluonhq.com/substrate/javafxstaticsdk/openjfx-15-latest-linux-x86_64-static.zip
-              unzip openjfx-15-latest-linux-x86_64-static.zip && cd $GITHUB_WORKSPACE
-            else
-              wget https://download2.gluonhq.com/substrate/javafxstaticsdk/openjfx-15-android-aarch64-static.zip
-              unzip openjfx-15-android-aarch64-static.zip && cd $GITHUB_WORKSPACE
-            fi
-          fi
-        env:
-          TARGET = ${{ matrix.target }}
-
-      - name: Install iOS JavaFX static libs (MacOS)
-        if: runner.os == 'macOS'
-        run: |
-          mkdir -p $HOME/javafx-static-libs-ios && cd $HOME/javafx-static-libs-ios
-          wget https://download2.gluonhq.com/substrate/javafxstaticsdk/openjfx-15-latest-ios-arm64-static.zip
-          unzip openjfx-15-latest-ios-arm64-static.zip && cd $GITHUB_WORKSPACE
-
       - name: Checkout
         uses: actions/checkout@v2
 
@@ -82,13 +51,16 @@ jobs:
         with:
           java-version: 11
 
+      - name: Install JavaFX static libs
+        run: |
+          bash $GITHUB_WORKSPACE/.github/scripts/javafx-static.sh $TARGET
+        env:
+          TARGET = ${{ matrix.target }}
+
       - name: Install Android SDK and NDK
         if: matrix.target == 'android'
         run: |
           bash $GITHUB_WORKSPACE/.github/scripts/android.sh
-
-      - name: Grant execute permission for gradlew
-        run: chmod +x gradlew
 
       - name: Run Host Tests (Linux)
         if: matrix.os == 'ubuntu-latest' && matrix.target == 'host'
@@ -100,7 +72,7 @@ jobs:
           echo 123456 | vncpasswd -f > /home/runner/.vnc/passwd
           chmod -v 600 /home/runner/.vnc/passwd
           vncserver :90 -localhost -nolisten tcp
-          ./gradlew -i test
+          sh gradlew -i test
           vncserver -kill :90
 
       - name: Run Host Tests (MacOS)
@@ -109,7 +81,7 @@ jobs:
           export GRAALVM_HOME=$HOME/graalvm/graalvm-svm-darwin-20.2-latest
           export JAVAFX_STATIC_SDK=$HOME/javafx-static-libs-darwin/sdk
           export JAVAFX_STATIC_SDK_IOS=$HOME/javafx-static-libs-ios/sdk
-          ./gradlew -i test
+          sh gradlew -i test
           
       - name: Run Android Tests (Linux)
         if: matrix.os == 'ubuntu-latest' && matrix.target == 'android'
@@ -118,13 +90,7 @@ jobs:
           export JAVAFX_STATIC_SDK=$HOME/javafx-static-libs-linux/sdk
           export ANDROID_SDK=$HOME/android-sdk
           export ANDROID_NDK=$HOME/android-sdk/ndk-bundle
-          export DISPLAY=:90
-          mkdir /home/runner/.vnc
-          echo 123456 | vncpasswd -f > /home/runner/.vnc/passwd
-          chmod -v 600 /home/runner/.vnc/passwd
-          vncserver :90 -localhost -nolisten tcp
-          ./gradlew -i test -Pandroid
-          vncserver -kill :90
+          sh gradlew -i test -Pandroid
   
       - name: Run Android Tests (MacOS)
         if: matrix.os == 'macos-latest' && matrix.target == 'android'
@@ -137,11 +103,11 @@ jobs:
           ./gradlew -i test -Pandroid
 
       - name: Build project
-        run: ./gradlew -i build -x test
+        run: sh gradlew -i build -x test
 
       - name: Deploy Snapshot
         if: runner.os == 'Linux' && github.ref == 'refs/heads/master'
-        run: ./gradlew publish -PsonatypeUsername=$SONATYPE_USERNAME -PsonatypePassword=$SONATYPE_PASSWORD
+        run: sh gradlew publish -PsonatypeUsername=$SONATYPE_USERNAME -PsonatypePassword=$SONATYPE_PASSWORD
         env:
           SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
           SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
