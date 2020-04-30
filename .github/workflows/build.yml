@@ -107,6 +107,7 @@ jobs:
           export GRAALVM_HOME=$HOME/graalvm/graalvm-svm-linux-20.2-latest
           export JAVAFX_STATIC_SDK=$HOME/javafx-static-libs-linux/sdk
           export ANDROID_SDK=$HOME/android-sdk
+          export ANDROID_NDK=$HOME/android-sdk/ndk-bundle
           export DISPLAY=:90
           mkdir /home/runner/.vnc
           echo 123456 | vncpasswd -f > /home/runner/.vnc/passwd
@@ -122,6 +123,7 @@ jobs:
           export JAVAFX_STATIC_SDK=$HOME/javafx-static-libs-darwin/sdk
           export JAVAFX_STATIC_SDK_IOS=$HOME/javafx-static-libs-ios/sdk
           export ANDROID_SDK=$HOME/android-sdk
+          export ANDROID_NDK=$HOME/android-sdk/ndk-bundle
           ./gradlew -i test -Pandroid
 
       - name: Build project
