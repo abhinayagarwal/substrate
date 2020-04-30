@@ -8,6 +8,7 @@ repositories {
 }
 
 def target = System.getProperty("substrate.target")
+def step = System.getProperty("substrate.step")
 
 configurations {
     substrate
@@ -45,6 +46,9 @@ task runScript(type: Exec) {
         argsList += ["-DtargetProfile=$target"]
     } else {
         argsList += ["-Dprism.sw=true"]
+    }
+    if (step != null) {
+        argsList += ["-Dstep=$step"]
     }
     if (expected != null) {
         argsList += ["-Dexpected=$expected"]

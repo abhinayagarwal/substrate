@@ -8,6 +8,7 @@ repositories {
 }
 
 def target = System.getProperty("substrate.target")
+def step = System.getProperty("substrate.step")
 
 configurations {
     substrate
@@ -45,6 +46,9 @@ task runScript(type: Exec) {
     }
     if (expected != null) {
         argsList += ["-Dexpected=$expected"]
+    }
+    if (step != null) {
+        argsList += ["-Dstep=$step"]
     }
     argsList += ["-Dmainclass=$mainClassName", 'com.gluonhq.substrate.SubstrateDispatcher']
     commandLine argsList

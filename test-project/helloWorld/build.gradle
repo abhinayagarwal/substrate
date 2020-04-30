@@ -4,6 +4,7 @@ repositories {
 }
 
 def target = System.getProperty("substrate.target")
+def step = System.getProperty("substrate.step")
 
 configurations {
     substrate
@@ -27,6 +28,9 @@ task runScript(type: Exec) {
                    "-Dgraalvm=${graalvmHome}"]
     if (target != null) {
         argsList += ["-DtargetProfile=$target"]
+    }
+    if (step != null) {
+        argsList += ["-Dstep=$step"]
     }
     if (skipsigning != null) {
         argsList += ["-Dskipsigning=$skipsigning"]

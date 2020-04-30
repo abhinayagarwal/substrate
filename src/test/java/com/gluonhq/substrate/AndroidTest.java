@@ -17,7 +17,7 @@ public class AndroidTest {
         BuildResult result = GradleRunner.create()
                 .withProjectDir(new File("test-project"))
                 .withArguments(":helloWorld:clean", ":helloWorld:build",
-                        "-Dexpected=" + expected, "-Dsubstrate.target=android",
+                        "-Dexpected=" + expected, "-Dsubstrate.target=android", "-Dsubstrate.step=package",
                         ":helloWorld:run", ":helloWorld:runScript", "--stacktrace")
                 .forwardOutput()
                 .build();
@@ -32,7 +32,7 @@ public class AndroidTest {
         BuildResult result = GradleRunner.create()
                 .withProjectDir(new File("test-project"))
                 .withArguments(":helloFX:clean", ":helloFX:build",
-                        "-Dexpected=" + expected, "-Dsubstrate.target=android",
+                        "-Dexpected=" + expected, "-Dsubstrate.target=android", "-Dsubstrate.step=package",
                         ":helloFX:run", ":helloFX:runScript", "--stacktrace")
                 .forwardOutput()
                 .build();
@@ -47,7 +47,7 @@ public class AndroidTest {
         BuildResult result = GradleRunner.create()
                 .withProjectDir(new File("test-project"))
                 .withArguments(":helloFXML:clean", ":helloFXML:build",
-                        "-Dexpected=" + expected, "-Dsubstrate.target=android",
+                        "-Dexpected=" + expected, "-Dsubstrate.target=android", "-Dsubstrate.step=package",
                         ":helloFXML:run", ":helloFXML:runScript", "--stacktrace")
                 .forwardOutput()
                 .build();
@@ -61,7 +61,7 @@ public class AndroidTest {
         String expected = "QuantumRenderer: shutdown";
         BuildResult result = GradleRunner.create()
                 .withProjectDir(new File("test-project"))
-                .withArguments(":helloGluon:clean", ":helloGluon:build",
+                .withArguments(":helloGluon:clean", ":helloGluon:build", "-Dsubstrate.step=package",
                         "-Dexpected=" + expected, "-Dsubstrate.target=android",
                         ":helloGluon:run", ":helloGluon:runScript", "--stacktrace")
                 .forwardOutput()

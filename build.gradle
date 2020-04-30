@@ -24,9 +24,6 @@ test {
         stackTraceFilters = []
     }
     if (project.hasProperty('android')) {
-        // We do not want to execute 'run' for android
-        // If it packages correctly, the test should pass
-        System.setProperty('step', 'package')
         exclude '**/HostTest.class'
     } else {
         exclude '**/AndroidTest.class'
