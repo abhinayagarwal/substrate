@@ -33,11 +33,10 @@ public class AndroidTest {
                 .withProjectDir(new File("test-project"))
                 .withArguments(":helloFX:clean", ":helloFX:build",
                         "-Dexpected=" + expected, "-Dsubstrate.target=android", "-Dsubstrate.step=package",
-                        ":helloFX:run", ":helloFX:runScript", "--stacktrace")
+                        ":helloFX:runScript", "--stacktrace")
                 .forwardOutput()
                 .build();
 
-        assertEquals(TaskOutcome.SUCCESS, result.task(":helloFX:run").getOutcome(), "Run failed!");
         assertEquals(TaskOutcome.SUCCESS, result.task(":helloFX:runScript").getOutcome(), "RunScript failed!");
     }
 
@@ -48,11 +47,10 @@ public class AndroidTest {
                 .withProjectDir(new File("test-project"))
                 .withArguments(":helloFXML:clean", ":helloFXML:build",
                         "-Dexpected=" + expected, "-Dsubstrate.target=android", "-Dsubstrate.step=package",
-                        ":helloFXML:run", ":helloFXML:runScript", "--stacktrace")
+                        ":helloFXML:runScript", "--stacktrace")
                 .forwardOutput()
                 .build();
 
-        assertEquals(TaskOutcome.SUCCESS, result.task(":helloFXML:run").getOutcome(), "Run failed!");
         assertEquals(TaskOutcome.SUCCESS, result.task(":helloFXML:runScript").getOutcome(), "RunScript failed!");
     }
 
@@ -63,11 +61,10 @@ public class AndroidTest {
                 .withProjectDir(new File("test-project"))
                 .withArguments(":helloGluon:clean", ":helloGluon:build", "-Dsubstrate.step=package",
                         "-Dexpected=" + expected, "-Dsubstrate.target=android",
-                        ":helloGluon:run", ":helloGluon:runScript", "--stacktrace")
+                        ":helloGluon:runScript", "--stacktrace")
                 .forwardOutput()
                 .build();
 
-        assertEquals(TaskOutcome.SUCCESS, result.task(":helloGluon:run").getOutcome(), "Run failed!");
         assertEquals(TaskOutcome.SUCCESS, result.task(":helloGluon:runScript").getOutcome(), "RunScript failed!");
     }
 }
