@@ -1,3 +1,5 @@
+echo $RUNNER_OS
+echo $1
 if [ "$RUNNER_OS" == "macOS" ]
 then
   mkdir -p $HOME/javafx-static-libs-darwin
@@ -5,9 +7,11 @@ then
   cd $HOME/javafx-static-libs-darwin
   if [ "$1" == "host" ]
   then
+    echo "Installing static libs for $RUNNER_OS and $1"
     wget https://download2.gluonhq.com/substrate/javafxstaticsdk/openjfx-15-latest-darwin-x86_64-static.zip
     unzip openjfx-15-latest-darwin-x86_64-static.zip
   else
+    echo "Installing static libs for $RUNNER_OS and $1"
     wget https://download2.gluonhq.com/substrate/javafxstaticsdk/openjfx-15-latest-android-aarch64-static.zip
     unzip openjfx-15-latest-android-aarch64-static.zip
   fi
@@ -18,9 +22,11 @@ else
   mkdir -p $HOME/javafx-static-libs-linux && cd $HOME/javafx-static-libs-linux
   if [ "$1" == "host" ]
   then
+    echo "Installing static libs for $RUNNER_OS and $1"
     wget https://download2.gluonhq.com/substrate/javafxstaticsdk/openjfx-15-latest-linux-x86_64-static.zip
     unzip openjfx-15-latest-linux-x86_64-static.zip
   else
+    echo "Installing static libs for $RUNNER_OS and $1"
     wget https://download2.gluonhq.com/substrate/javafxstaticsdk/openjfx-15-latest-android-aarch64-static.zip
     unzip openjfx-15-latest-android-aarch64-static.zip
   fi
